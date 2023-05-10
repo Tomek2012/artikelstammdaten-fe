@@ -1,1 +1,328 @@
-<p>artikelstamm works!</p>
+<div id="artikelstamm">
+    <h2>Artikelstammdaten anlegen</h2>
+    <form id="form" #todoForm="ngForm">
+      <div>
+        <label for="articleIdentification">Artikelidentifikationen:</label>
+        <table name="articleIdentification">
+          <thead>
+            <tr>
+              <th class="columnHalfWidth">Artikel-ID</th>
+              <th class="columnHalfWidth">European Article Number (EAN)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="columnHalfWidth">
+                <input type="text" id="articleId" name="articleId" [(ngModel)]="article.ArticleId" disabled>
+              </td>
+              <td class="columnHalfWidth">
+                <input type="text" id="ean" name="ean" [(ngModel)]="article.EAN">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="displayNames">Artikelbezeichnung:</label>
+        <table name="displayNames">
+          <thead>
+            <tr>
+              <th class="languageColumn">Sprache</th>
+              <th>Artikelbezeichnung</th>
+              <th class="editTableColumn">Löschen / Hinzufügen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let displayName of article.DisplayNames; let i = index">
+              <td class="languageColumn">
+                {{getLanguage(displayName.Language)}}
+              </td>
+              <td>
+                <input type="text" class="form-control" id="displayNameText" [(ngModel)]="article.DisplayNames[i].Text" name=displayNameText{{i}}>
+              </td>
+              <td class="editTableColumn">
+                <button class="deleteButton" type="button" (click)="removeDisplayName(i)">Sprache löschen</button>
+              </td>
+            </tr>
+            <tr *ngIf="getAvailableLanguagesForDisplayName().length > 0">
+              <td class="languageColumn">
+                <select id="new-language" name="new-language" [(ngModel)]="newDisplayNameLanguage">
+                  <option *ngFor="let language of getAvailableLanguagesForDisplayName()" [value]="language">{{getLanguage(language)}}</option>
+                </select>
+              </td>
+              <td></td>
+              <td class="editTableColumn">
+                <button class="addButton" type="button" (click)="addDisplayName(newDisplayNameLanguage)">Sprache hinzufügen</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="descriptions">Artikelbschreibung:</label>
+        <table name="descriptions">
+          <thead>
+            <tr>
+              <th class="languageColumn">Sprache</th>
+              <th>Artikelbeschreibung</th>
+              <th class="editTableColumn">Löschen / Hinzufügen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let description of article.Descriptions; let i = index">
+              <td class="languageColumn">
+                {{getLanguage(description.Language)}}
+              </td>
+              <td>
+                <input type="text" class="form-control" id="articleDescription" [(ngModel)]="article.Descriptions[i].Text" name=articleDescription{{i}}>
+              </td>
+              <td class="editTableColumn">
+                <button class="deleteButton" type="button" (click)="removeDescription(i)">Sprache löschen</button>
+              </td>
+            </tr>
+            <tr *ngIf="getAvailableLanguagesForDescription().length > 0">
+              <td class="languageColumn">
+                <select id="new-description" name="new-description" [(ngModel)]="newDescriptionLanguage">
+                  <option *ngFor="let language of getAvailableLanguagesForDescription()" [value]="language">{{getLanguage(language)}}</option>
+                </select>
+              </td>
+              <td></td>
+              <td class="editTableColumn">
+                <button class="addButton" type="button" (click)="addDescription(newDescriptionLanguage)">Sprache hinzufügen</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="materialInformation">Informationen zum Material:</label>
+        <table name="materialInformation">
+          <thead>
+            <tr>
+              <th class="materialColumn">Material</th>
+              <th class="materialColumn">Prozentsatz</th>
+              <th class="editTableColumn">Löschen / Hinzufügen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let material of article.MaterialInformation; let i = index">
+              <td class="materialColumn">
+                {{getMaterial(material.Material)}}
+              </td>
+              <td class="materialColumn">
+                <input id="percentage" name=percentage{{i}} type="number" [(ngModel)]="article.MaterialInformation[i].Percentage" min="0" max="100" (change)="validateMaterialPercentages(i)">
+              </td>
+              <td class="editTableColumn">
+                <button class="deleteButton" type="button" (click)="removeMaterial(i)">Material löschen</button>
+              </td>
+            </tr>
+            <tr *ngIf="getAvailableMaterial().length > 0">
+              <td class="materialColumn">
+                <select id="new-material" name="new-material" [(ngModel)]="newMaterial">
+                  <option *ngFor="let material of getAvailableMaterial()" [value]="material">{{getMaterial(material)}}</option>
+                </select>
+              </td>
+              <td class="materialColumn"></td>
+              <td class="editTableColumn">
+                <button class="addButton" type="button" (click)="addMaterial(newMaterial)">Material hinzufügen</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="color">Farbe:</label>
+        <select id="color" name="color" [(ngModel)]="article.Color" class="form-control">
+          <option value="beige">Beige</option>
+          <option value="blue">Blau</option>
+          <option value="yellow">Gelb</option>
+          <option value="grey">Grau</option>
+          <option value="green">Grün</option>
+          <option value="purple">Lila</option>
+          <option value="multicoloured">Mehrfarbig</option>
+          <option value="orange">Orange</option>
+          <option value="pink">Pink</option>
+          <option value="red">Rot</option>
+          <option value="black">Schwarz</option>
+          <option value="white">Weiß</option>
+        </select>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="countryOrigin">Herkunftsland:</label>
+        <select id="countryOrigin" name="countryOrigin" class="form-control" [(ngModel)]="article.CountryOrigin">
+          <option *ngFor="let country of allCountries" [value]="country">{{getCountry(country)}}</option>
+        </select>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="gender">Geschlecht:</label>
+        <label for="genderFemale" class="radioButtonLabel">
+          <input type="radio" id="genderFemale" name="gender" value="Female" [(ngModel)]="article.Gender">
+          Damen
+        </label>
+        <label for="genderMale" class="radioButtonLabel">
+          <input type="radio" id="genderMale" name="gender" value="Male" [(ngModel)]="article.Gender">
+          Herren
+        </label>
+        <label for="genderUnisex" class="radioButtonLabel">
+          <input type="radio" id="genderUnisex" name="gender" value="Unisex" [(ngModel)]="article.Gender">
+          Unisex
+        </label>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="sizes">Kleidergrößen:</label>
+        <table name="sizes">
+          <thead>
+            <tr>
+              <th class="sizeColumn">Land</th>
+              <th class="sizeColumn">Kleidergröße</th>
+              <th class="editTableColumn">Löschen / Hinzufügen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let size of article.Sizes; let i = index">
+              <td class="sizeColumn">
+                {{getCountry(size.Country)}}
+              </td>
+              <td class="sizeColumn">
+                <select id="size" name=size{{i}} [(ngModel)]="article.Sizes[i].Size" class="form-control">
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                  <option value="XXXL">XXXL</option>
+                </select>
+              </td>
+              <td class="editTableColumn">
+                <button class="deleteButton" type="button" (click)="removeSize(i)">Land löschen</button>
+              </td>
+            </tr>
+            <tr *ngIf="getAvailableCountriesForSizes().length > 0">
+              <td class="sizeColumn">
+                <select id="new-size" name="new-size" [(ngModel)]="newSizeForCountry">
+                  <option *ngFor="let country of getAvailableCountriesForSizes()" [value]="country">{{getCountry(country)}}</option>
+                </select>
+              </td>
+              <td class="sizeColumn"></td>
+              <td class="editTableColumn">
+                <button class="addButton" type="button" (click)="addSize(newSizeForCountry)">Land hinzufügen</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div>
+        <label for="availableDates">Geplante Verfügbarkeit des Artikels:</label>
+        <table name="availableDates">
+          <thead>
+            <tr>
+              <th>Verfügbar ab</th>
+              <th>Verfügbar bis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="date" id="availableFrom" name="availableFrom" [(ngModel)]="article.AvailableFrom">
+              </td>
+              <td>
+                <input type="date" id="availableUntil" name="availableUntil" [(ngModel)]="article.AvailableUntil">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div>
+        <label for="price">Preisangaben:</label>
+        <table name="price">
+          <thead>
+            <tr>
+              <th class="columnHalfWidth">Selbstkostenpreis (in Euro)</th>
+              <th class="columnHalfWidth">Unverbindliche Preisempfehlung (in Euro)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="columnHalfWidth">
+                <input type="text" id="costPrice" name="costPrice" [(ngModel)]="article.CostPrice">
+              </td>
+              <td class="columnHalfWidth">
+                <input type="text" id="msrp" name="msrp" [(ngModel)]="article.MSRP">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div>
+        <label for="photos">Artikelbilder:</label>
+        <table name="photos">
+          <thead>
+            <tr>
+              <th>Link zum Artikelbild</th>
+              <th>Link zum Vorschaubild</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="photoURL" name="photoURL" [(ngModel)]="article.PhotoURL">
+              </td>
+              <td>
+                <input type="text" id="photoURLMini" name="photoURLMini" [(ngModel)]="article.PhotoURLMini">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="unit">Verpackungseinheit:</label>
+        <label for="unitPiece" class="radioButtonLabel">
+          <input type="radio" id="unitPiece" name="unit" value="Piece" [(ngModel)]="article.Unit">
+          Stück
+        </label>
+        <label for="unitPair" class="radioButtonLabel">
+          <input type="radio" id="unitPair" name="unit" value="Pair" [(ngModel)]="article.Unit">
+          Paar
+        </label>
+      </div>
+      <br>
+      <div>
+        <label for="packingDimensions">Größe des verpackten Artikels:</label>
+        <table name="packingDimensions">
+          <thead>
+            <tr>
+              <th>Länge (in Millimeter)</th>
+              <th>Breite (in Millimeter)</th>
+              <th>Höhe (in Millimeter)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input type="text" id="packing-length" name="packingLength" [(ngModel)]="article.PackingDimensions.Length">
+              </td>
+              <td>
+                <input type="text" id="packing-width" name="packingWidth" [(ngModel)]="article.PackingDimensions.Width">
+              </td>
+              <td>
+                <input type="text" id="packing-height" name="packingHeight" [(ngModel)]="article.PackingDimensions.Height">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+    <button class="addButton" type="button" (click)="saveArticleData()">Artikelstammdaten speichern</button>
+</div>

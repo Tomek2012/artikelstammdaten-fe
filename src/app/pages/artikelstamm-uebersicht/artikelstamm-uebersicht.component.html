@@ -1,3 +1,28 @@
-<mat-toolbar>
-    <span>Artikelstammdatenverwaltung</span>
-  </mat-toolbar>
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>ID</th>
+        <th>EAN</th>
+        <th>Bezeichnung</th>
+        <th>Aktionen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let artikel of artikelstamme">
+        <td>{{artikel.id}}</td>
+        <td>{{artikel.ean}}</td>
+        <td>{{artikel.bezeichnung}}</td>
+        <td>
+          <button class="btn btn-sm btn-primary mr-2" (click)="editArtikel(artikel)">Bearbeiten</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteArtikel(artikel)">Löschen</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  
+  
+  
+  
+  

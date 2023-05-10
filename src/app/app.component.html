@@ -1,1 +1,28 @@
-<app-artikelstamm-uebersicht></app-artikelstamm-uebersicht>
+<!-- Header for navigation and login-->
+<app-nav-bar [inputSideNav]="sidenav"></app-nav-bar>
+
+<!-- Seitennavigation inklusive Rahmen fuer Seiteninhalte -->
+<mat-sidenav-container class="sidenav-container" autosize="true">
+  <mat-sidenav #sidenav class="sidenav-menu" mode="side" opened>
+    <mat-nav-list>
+      <!-- Navigation (Home, Zeiterfassung, usw) abhaengig von Authentifikation -->
+      <mat-list-item routerLink="/" routerLinkActive="active">
+        <span class="menu-item">
+          <mat-icon class="home-icon">home</mat-icon>
+          Artikelstammdaten</span
+        >
+      </mat-list-item>
+      <mat-list-item routerLink="/artikelstamm" routerLinkActive="active">
+        <span class="menu-item">
+          <mat-icon class="home-icon">home</mat-icon>
+          Abkürzung</span
+        >
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Seiteninhalt -->
+  <div class="sidenav-content">
+    <router-outlet></router-outlet>
+  </div>
+</mat-sidenav-container>
