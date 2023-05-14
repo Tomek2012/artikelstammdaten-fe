@@ -1,5 +1,5 @@
 <div id="artikelstamm">
-  <h2>Artikelstammdaten bearbeiten</h2>
+  <h2>Artikelstammdaten anlegen</h2>
   <form id="form" #todoForm="ngForm">
     <div>
       <label for="articleIdentification">Artikelidentifikationen:</label>
@@ -18,7 +18,6 @@
                 id="articleId"
                 name="articleId"
                 [(ngModel)]="article.articleId"
-                disabled
               />
             </td>
             <td class="columnHalfWidth">

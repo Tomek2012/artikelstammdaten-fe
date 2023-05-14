@@ -1,86 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArtikestammApiService } from 'src/app/api/artikestamm-api.service';
 import { Artikel } from 'src/app/models/artikel.model';
 
 @Component({
-  selector: 'app-artikelstamm',
-  templateUrl: './artikelstamm.component.html',
-  styleUrls: ['./artikelstamm.component.scss'],
+  selector: 'app-artikelstamm-anlegen',
+  templateUrl: './artikelstamm-anlegen.component.html',
+  styleUrls: ['./artikelstamm-anlegen.component.scss'],
 })
-export class ArtikelstammComponent implements OnInit {
+export class ArtikelstammAnlegenComponent {
   constructor(
-    private activatedroute: ActivatedRoute,
-    private artikelstammService: ArtikestammApiService
+    private artikelstammService: ArtikestammApiService,
+    private router: Router
   ) {}
 
   article: Artikel = {
-    articleId: '483726',
-    ean: '3827461492123',
-    displayNames: [
-      {
-        language: 'EN',
-        text: "Men's Training T-Shirt",
-      },
-      {
-        language: 'DE',
-        text: 'Herren Training T-Shirt',
-      },
-      {
-        language: 'ES',
-        text: 'Camiseta de entrenamiento para hombre',
-      },
-    ],
-    sizes: [
-      {
-        country: 'US',
-        size: 'M',
-      },
-      {
-        country: 'EU',
-        size: 'L',
-      },
-      {
-        country: 'UK',
-        size: 'M',
-      },
-    ],
-    gender: 'Male',
-    color: 'black',
-    unit: 'Piece',
-    descriptions: [
-      {
-        language: 'EN',
-        text: "Stay cool and dry during your workout with this Men's Training T-Shirt, made with breathable and moisture-wicking fabric.",
-      },
-      {
-        language: 'DE',
-        text: 'Bleiben Sie während Ihres Trainings mit diesem Herren Training T-Shirt cool und trocken. Das atmungsaktive und feuchtigkeitsableitende Gewebe sorgt für Komfort.',
-      },
-      {
-        language: 'ES',
-        text: 'Manténgase fresco y seco durante su entrenamiento con esta camiseta de entrenamiento para hombre, hecha con tela transpirable y que absorbe la humedad.',
-      },
-    ],
-    materialInformation: [
-      {
-        material: 'polyester',
-        percentage: '100',
-      },
-    ],
-    availableFrom: '2023-06-01',
-    availableUntil: '2023-12-31',
-    countryOrigin: 'DE',
-    costPrice: '15.99',
-    msrp: '29.99',
-    currency: 'EUR',
-    photoURL: 'https://pictures/pic1.com',
-    photoURLMini: 'https://pictures/minipic1.com',
+    articleId: '',
+    ean: '',
+    displayNames: [],
+    sizes: [],
+    gender: '',
+    color: '',
+    unit: '',
+    descriptions: [],
+    materialInformation: [],
+    availableFrom: '',
+    availableUntil: '',
+    countryOrigin: '',
+    costPrice: '',
+    msrp: '',
+    currency: '',
+    photoURL: '',
+    photoURLMini: '',
     packingDimensions: {
-      length: '30',
-      width: '20',
-      height: '2',
-      unit: 'mm',
+      length: '',
+      width: '',
+      height: '',
+      unit: '',
     },
   };
 
@@ -92,13 +48,6 @@ export class ArtikelstammComponent implements OnInit {
   allLanguages = ['DE', 'EN', 'FR', 'IT', 'ES']; // Liste aller verfügbaren Sprachen
   allCountriesForSizes = ['DE', 'FR', 'UK', 'IT', 'ES', 'US'];
   allCountries = ['CN', 'DE', 'FR', 'UK', 'IN', 'IT', 'PT', 'ES', 'US'];
-
-  ngOnInit(): void {
-    var id = this.activatedroute.snapshot.params['id'];
-    this.artikelstammService.searchById(id).subscribe((res) => {
-      this.article = res[0];
-    })
-  }
 
   addDisplayName(language: string) {
     if (language != '') {
@@ -329,5 +278,11 @@ export class ArtikelstammComponent implements OnInit {
   saveArticleData() {
     this.article.currency = 'EUR';
     this.article.packingDimensions.unit = 'mm';
+    if (this.article.articleId != null) {
+      this.artikelstammService.add(this.article).subscribe(() => {
+        console.log('Speicherung erfolgreich');
+        this.router.navigateByUrl("");
+      });
+    }
   }
 }

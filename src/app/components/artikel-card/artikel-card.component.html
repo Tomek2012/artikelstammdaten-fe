@@ -1,0 +1,51 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{ artikelname }}</mat-card-title>
+    <mat-card-subtitle>Artikel-ID: {{ artikelnummer }}</mat-card-subtitle>
+  </mat-card-header>
+  <div class="image" *ngIf="photoURL; else ohneBild">
+    <img
+      class="artikelimage"
+      mat-card-image
+      [src]="photoURL"
+      (error)="onImgError($event)"
+      alt="Photo of a Shiba Inu"
+    />
+  </div>
+  <mat-card-content>
+    <p>
+      {{ artikelbeschreibung }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="buttons">
+    <button
+      class="edit-button"
+      mat-mini-fab
+      color="basic"
+      aria-label="Example icon button with a delete icon"
+      (click)="editArticle()"
+      [routerLink]="['/artikelstamm', artikelnummer]"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button
+      class="delete-button"
+      mat-mini-fab
+      color="warn"
+      aria-label="Example icon button with a delete icon"
+      (click)="deleteArticle()"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
+
+<ng-template #ohneBild
+  ><div *ngIf="photoURL; else ohneBild">
+    <img
+      class="artikelimage"
+      mat-card-image
+      src="https://cdn.pixabay.com/photo/2012/04/24/12/29/no-symbol-39767_960_720.png"
+      alt="Photo of a Shiba Inu"
+    /></div
+></ng-template>
