@@ -31,4 +31,11 @@ export class ArtikestammApiService {
       artikel
     );
   }
+
+  updateOne(artikel: Artikel): Observable<Artikel[]> {
+    return this.http.put<Artikel[]>(
+      'http://localhost:8080/artikelstammdaten/updateOne',
+      artikel
+    );
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArtikestammApiService } from 'src/app/api/artikestamm-api.service';
 import { Artikel } from 'src/app/models/artikel.model';
 
@@ -11,7 +11,8 @@ import { Artikel } from 'src/app/models/artikel.model';
 export class ArtikelstammComponent implements OnInit {
   constructor(
     private activatedroute: ActivatedRoute,
-    private artikelstammService: ArtikestammApiService
+    private artikelstammService: ArtikestammApiService,
+    private router: Router
   ) {}
 
   article: Artikel = {
@@ -97,7 +98,7 @@ export class ArtikelstammComponent implements OnInit {
     var id = this.activatedroute.snapshot.params['id'];
     this.artikelstammService.searchById(id).subscribe((res) => {
       this.article = res[0];
-    })
+    });
   }
 
   addDisplayName(language: string) {
@@ -329,5 +330,10 @@ export class ArtikelstammComponent implements OnInit {
   saveArticleData() {
     this.article.currency = 'EUR';
     this.article.packingDimensions.unit = 'mm';
+
+    this.artikelstammService.updateOne(this.article).subscribe(() => {
+      console.log('Speicherung erfolgreich');
+      this.router.navigateByUrl('');
+    });
   }
 }
