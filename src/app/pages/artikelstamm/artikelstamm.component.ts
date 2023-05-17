@@ -332,7 +332,6 @@ export class ArtikelstammComponent implements OnInit {
     this.article.packingDimensions.unit = 'mm';
 
     this.artikelstammService.updateOne(this.article).subscribe(() => {
-      console.log('Speicherung erfolgreich');
       this.router.navigateByUrl('');
     });
   }

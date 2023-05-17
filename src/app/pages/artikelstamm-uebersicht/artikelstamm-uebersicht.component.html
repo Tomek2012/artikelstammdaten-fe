@@ -1,3 +1,55 @@
+<div class="row filter">
+  <form [formGroup]="filterForm">
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>filter_alt</mat-icon>Filterung/Sortierung
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h3>Filter</h3>
+        <mat-form-field class="filterbutton">
+          <mat-label>Artikelnummer</mat-label>
+          <input matInput formControlName="artikelnummer">
+        </mat-form-field>
+        <mat-form-field class="filterbutton">
+          <mat-label>Artikelname</mat-label>
+          <input matInput formControlName="artikelname">
+        </mat-form-field>
+        <mat-form-field class="filterbutton">
+          <mat-label>Gewinn größer als</mat-label>
+          <input matInput formControlName="gewinn">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Farbe</mat-label>
+          <mat-select formControlName="filterFarbe">
+            <mat-option
+              *ngFor="let colorValue of colorValues"
+              [value]="colorValue.value"
+            >
+              {{ colorValue.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <h3>Sortierung</h3>
+        <mat-form-field>
+          <mat-label>Sortieren nach</mat-label>
+          <mat-select formControlName="sort">
+            <mat-option
+              *ngFor="let sortValue of sortValues"
+              [value]="sortValue.value"
+            >
+              {{ sortValue.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="row">
+          <button (click)="getArtikelstammFilter()" mat-raised-button>Bestätigen</button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</div>
 <div *ngFor="let artikel of artikelstaemme" class="cards">
   <app-artikel-card
     [artikelnummer]="artikel.articleId"

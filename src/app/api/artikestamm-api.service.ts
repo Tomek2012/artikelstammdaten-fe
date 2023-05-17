@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Artikel } from '../models/artikel.model';
+import { SearchCondition } from '../models/searchcondition.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,13 @@ export class ArtikestammApiService {
 
   getAllArtikelstammdaten(): Observable<Artikel[]> {
     return this.http.get<Artikel[]>('http://localhost:8080/artikelstammdaten');
+  }
+
+  find(searchCondition: SearchCondition[]): Observable<Artikel[]> {
+    return this.http.post<Artikel[]>(
+      'http://localhost:8080/artikelstammdaten/find',
+      searchCondition
+    );
   }
 
   deleteById(artikelnummer: string): Observable<void> {

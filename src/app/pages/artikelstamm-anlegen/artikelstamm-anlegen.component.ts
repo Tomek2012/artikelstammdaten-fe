@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ArtikestammApiService } from 'src/app/api/artikestamm-api.service';
 import { Artikel } from 'src/app/models/artikel.model';
 
@@ -280,8 +280,7 @@ export class ArtikelstammAnlegenComponent {
     this.article.packingDimensions.unit = 'mm';
     if (this.article.articleId != null) {
       this.artikelstammService.add(this.article).subscribe(() => {
-        console.log('Speicherung erfolgreich');
-        this.router.navigateByUrl("");
+        this.router.navigateByUrl('');
       });
     }
   }
