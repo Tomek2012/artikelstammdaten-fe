@@ -16,8 +16,8 @@ export interface Artikel {
   availableFrom: string;
   availableUntil: string;
   countryOrigin: string;
-  costPrice: string;
-  msrp: string;
+  costPrice: number;
+  msrp: number;
   currency: string;
   photoURL: string;
   photoURLMini: string;

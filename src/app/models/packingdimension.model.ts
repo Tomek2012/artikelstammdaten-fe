@@ -1,6 +1,6 @@
 export interface PackingDimensions {
-    length: string;
-    width: string;
-    height: string;
+    length: number;
+    width: number;
+    height: number;
     unit: string;
   }

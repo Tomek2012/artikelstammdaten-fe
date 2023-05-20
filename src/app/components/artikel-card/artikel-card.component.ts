@@ -10,7 +10,7 @@ import { DisplayNames } from 'src/app/models/displayname.model';
 })
 export class ArtikelCardComponent implements OnInit {
   @Input() artikelnamen: DisplayNames[] = [];
-  @Input() artikelnummer: string = '483726';
+  @Input() artikelnummer: string = '';
   @Input() artikelbeschreibungen: Description[] = [];
   @Input() photoURL?: string;
 

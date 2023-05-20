@@ -14,7 +14,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
   constructor(private artikelstammService: ArtikestammApiService) {}
 
   filterForm = new FormGroup({
-    sort: new FormControl('ArticleId'),
+    sort: new FormControl('articleId'),
     filterFarbe: new FormControl('keineAuswahl'),
     artikelnummer: new FormControl(''),
     artikelname: new FormControl(''),
@@ -39,9 +39,9 @@ export class ArtikelstammUebersichtComponent implements OnInit {
   ];
 
   sortValues: Sortierung[] = [
-    { value: 'ArticleId', viewValue: 'Artikel ID' },
-    { value: 'EAN', viewValue: 'EAN' },
-    { value: 'Gender', viewValue: 'Geschlecht' },
+    { value: 'articleId', viewValue: 'Artikel ID' },
+    { value: 'ean', viewValue: 'EAN' },
+    { value: 'gender', viewValue: 'Geschlecht' },
   ];
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     if (this.filterForm.controls.artikelnummer.value) {
       let sortkriterium: SearchCondition;
       sortkriterium = {
-        field: 'ArticleId',
+        field: 'articleId',
         operator: 'eq',
         value: this.filterForm.controls.artikelnummer.value,
       };
@@ -82,7 +82,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     if (this.filterForm.controls.artikelname.value) {
       let sortkriterium: SearchCondition;
       sortkriterium = {
-        field: 'DisplayNames.Text',
+        field: 'displayNames.text',
         operator: 'regex',
         value: this.filterForm.controls.artikelname.value,
       };
@@ -92,7 +92,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     if (this.filterForm.controls.gewinn.value) {
       let sortkriterium: SearchCondition;
       sortkriterium = {
-        field: 'PriceDifference',
+        field: 'priceDifference',
         operator: 'gte',
         value: this.filterForm.controls.gewinn.value,
       };
@@ -105,7 +105,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     ) {
       let sortkriterium: SearchCondition;
       sortkriterium = {
-        field: 'Color',
+        field: 'color',
         operator: 'eq',
         value: this.filterForm.controls.filterFarbe.value,
       };

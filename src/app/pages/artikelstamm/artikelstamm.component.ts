@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtikestammApiService } from 'src/app/api/artikestamm-api.service';
 import { Artikel } from 'src/app/models/artikel.model';
+import { SearchCondition } from 'src/app/models/searchcondition.model';
 
 @Component({
   selector: 'app-artikelstamm',
@@ -16,72 +17,64 @@ export class ArtikelstammComponent implements OnInit {
   ) {}
 
   article: Artikel = {
-    articleId: '483726',
-    ean: '3827461492123',
+    articleId: '',
+    ean: '',
     displayNames: [
       {
-        language: 'EN',
-        text: "Men's Training T-Shirt",
+        language: '',
+        text: '',
       },
       {
-        language: 'DE',
-        text: 'Herren Training T-Shirt',
+        language: '',
+        text: '',
       },
       {
-        language: 'ES',
-        text: 'Camiseta de entrenamiento para hombre',
+        language: '',
+        text: '',
       },
     ],
     sizes: [
       {
-        country: 'US',
-        size: 'M',
+        country: '',
+        size: '',
       },
       {
-        country: 'EU',
-        size: 'L',
+        country: '',
+        size: '',
       },
       {
-        country: 'UK',
-        size: 'M',
+        country: '',
+        size: '',
       },
     ],
-    gender: 'Male',
-    color: 'black',
-    unit: 'Piece',
+    gender: '',
+    color: '',
+    unit: '',
     descriptions: [
       {
-        language: 'EN',
-        text: "Stay cool and dry during your workout with this Men's Training T-Shirt, made with breathable and moisture-wicking fabric.",
-      },
-      {
-        language: 'DE',
-        text: 'Bleiben Sie während Ihres Trainings mit diesem Herren Training T-Shirt cool und trocken. Das atmungsaktive und feuchtigkeitsableitende Gewebe sorgt für Komfort.',
-      },
-      {
-        language: 'ES',
-        text: 'Manténgase fresco y seco durante su entrenamiento con esta camiseta de entrenamiento para hombre, hecha con tela transpirable y que absorbe la humedad.',
+        language: '',
+        text: '',
       },
     ],
     materialInformation: [
       {
-        material: 'polyester',
-        percentage: '100',
+        material: '',
+        percentage: '',
       },
     ],
-    availableFrom: '2023-06-01',
-    availableUntil: '2023-12-31',
-    countryOrigin: 'DE',
-    costPrice: '15.99',
-    msrp: '29.99',
-    currency: 'EUR',
-    photoURL: 'https://pictures/pic1.com',
-    photoURLMini: 'https://pictures/minipic1.com',
+    availableFrom: '',
+    availableUntil: '',
+    countryOrigin: '',
+    costPrice: 0,
+    msrp: 0,
+    currency: '',
+    photoURL: '',
+    photoURLMini: '',
     packingDimensions: {
-      length: '30',
-      width: '20',
-      height: '2',
-      unit: 'mm',
+      length: 0,
+      width: 0,
+      height: 0,
+      unit: '',
     },
   };
 
@@ -96,7 +89,16 @@ export class ArtikelstammComponent implements OnInit {
 
   ngOnInit(): void {
     var id = this.activatedroute.snapshot.params['id'];
-    this.artikelstammService.searchById(id).subscribe((res) => {
+
+    let sortierkriterien: SearchCondition[] = [];
+    let sortkriterium: SearchCondition = {
+      field: 'articleId',
+      operator: 'eq',
+      value: id,
+    };
+    sortierkriterien.push(sortkriterium);
+
+    this.artikelstammService.find(sortierkriterien).subscribe((res) => {
       this.article = res[0];
     });
   }
