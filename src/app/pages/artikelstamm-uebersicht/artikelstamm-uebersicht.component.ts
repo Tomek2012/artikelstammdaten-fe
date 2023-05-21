@@ -42,6 +42,8 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     { value: 'articleId', viewValue: 'Artikel ID' },
     { value: 'ean', viewValue: 'EAN' },
     { value: 'gender', viewValue: 'Geschlecht' },
+    { value: 'costPrice', viewValue: 'Selbstkostenpreis' },
+    { value: 'msrp', viewValue: 'UVP' },
   ];
 
   ngOnInit(): void {

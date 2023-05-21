@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ArtikestammApiService } from 'src/app/api/artikestamm-api.service';
 import { Artikel } from 'src/app/models/artikel.model';
@@ -11,7 +12,8 @@ import { Artikel } from 'src/app/models/artikel.model';
 export class ArtikelstammAnlegenComponent {
   constructor(
     private artikelstammService: ArtikestammApiService,
-    private router: Router
+    private router: Router,
+    public snackBar: MatSnackBar
   ) {}
 
   article: Artikel = {
@@ -48,6 +50,13 @@ export class ArtikelstammAnlegenComponent {
   allLanguages = ['DE', 'EN', 'FR', 'IT', 'ES']; // Liste aller verfügbaren Sprachen
   allCountriesForSizes = ['DE', 'FR', 'UK', 'IT', 'ES', 'US'];
   allCountries = ['CN', 'DE', 'FR', 'UK', 'IN', 'IT', 'PT', 'ES', 'US'];
+
+  // Pop-Up for a feedback after creating a new article
+  openSnackBar() {
+    this.snackBar.open('Artikel wurde erfolgreich angelegt', 'Schließen', {
+      duration: 3000,
+    });
+  }
 
   addDisplayName(language: string) {
     if (language != '') {
@@ -173,28 +182,27 @@ export class ArtikelstammAnlegenComponent {
     var currentPercentage =
       this.article.materialInformation[lastModifiedIndex].percentage;
 
-    if (currentPercentage == null || isNaN(Number(currentPercentage))) {
-      this.article.materialInformation[lastModifiedIndex].percentage = '0';
+    if (currentPercentage == null || isNaN(currentPercentage)) {
+      this.article.materialInformation[lastModifiedIndex].percentage = 0;
       return;
     }
 
     var sum = 0;
     for (let material of this.article.materialInformation) {
-      sum += Number(material.percentage);
+      sum += material.percentage;
     }
     if (sum > 100) {
       alert('Die Summe der Prozentsätze darf 100% nicht überschreiten.');
-      this.article.materialInformation[lastModifiedIndex].percentage = String(
-        Number(currentPercentage) - sum + 100
-      );
+      this.article.materialInformation[lastModifiedIndex].percentage =
+        currentPercentage - sum + 100;
     }
   }
 
   addMaterial(material: string) {
-    if (material != '') {
+    if (material) {
       this.article.materialInformation.push({
         material: material,
-        percentage: '0',
+        percentage: 0,
       });
     }
   }
@@ -275,11 +283,13 @@ export class ArtikelstammAnlegenComponent {
     return material;
   }
 
+  // Save new article
   saveArticleData() {
     this.article.currency = 'EUR';
     this.article.packingDimensions.unit = 'mm';
     if (this.article.articleId != null) {
       this.artikelstammService.add(this.article).subscribe(() => {
+        this.openSnackBar();
         this.router.navigateByUrl('');
       });
     }

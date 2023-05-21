@@ -21,6 +21,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { ArtikelstammAnlegenComponent } from './pages/artikelstamm-anlegen/artikelstamm-anlegen.component';
 import { ArtikelstammUebersichtComponent } from './pages/artikelstamm-uebersicht/artikelstamm-uebersicht.component';
 import { ArtikelstammComponent } from './pages/artikelstamm/artikelstamm.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ArtikelstammComponent } from './pages/artikelstamm/artikelstamm.compone
     MatCardModule,
     MatExpansionModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

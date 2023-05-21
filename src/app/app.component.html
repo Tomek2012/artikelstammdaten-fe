@@ -1,11 +1,11 @@
 <!-- Header for navigation and login-->
 <app-nav-bar [inputSideNav]="sidenav"></app-nav-bar>
 
-<!-- Seitennavigation inklusive Rahmen fuer Seiteninhalte -->
+<!-- Navigation on the site with frame -->
 <mat-sidenav-container class="sidenav-container" autosize="true">
   <mat-sidenav #sidenav class="sidenav-menu" mode="side" opened>
     <mat-nav-list>
-      <!-- Navigation (Home, Zeiterfassung, usw) abhaengig von Authentifikation -->
+      <!-- Navigation (Home, Zeiterfassung, usw) -->
       <mat-list-item routerLink="/" routerLinkActive="active">
         <span class="menu-item">
           <mat-icon class="home-icon">home</mat-icon>
@@ -21,7 +21,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <!-- Seiteninhalt -->
+  <!-- Page-Content -->
   <div class="sidenav-content">
     <router-outlet></router-outlet>
   </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtikestammApiService } from 'src/app/api/artikestamm-api.service';
 import { Artikel } from 'src/app/models/artikel.model';
@@ -13,7 +14,8 @@ export class ArtikelstammComponent implements OnInit {
   constructor(
     private activatedroute: ActivatedRoute,
     private artikelstammService: ArtikestammApiService,
-    private router: Router
+    private router: Router,
+    public snackBar: MatSnackBar
   ) {}
 
   article: Artikel = {
@@ -59,7 +61,7 @@ export class ArtikelstammComponent implements OnInit {
     materialInformation: [
       {
         material: '',
-        percentage: '',
+        percentage: 0,
       },
     ],
     availableFrom: '',
@@ -88,6 +90,12 @@ export class ArtikelstammComponent implements OnInit {
   allCountries = ['CN', 'DE', 'FR', 'UK', 'IN', 'IT', 'PT', 'ES', 'US'];
 
   ngOnInit(): void {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+
     var id = this.activatedroute.snapshot.params['id'];
 
     let sortierkriterien: SearchCondition[] = [];
@@ -100,6 +108,13 @@ export class ArtikelstammComponent implements OnInit {
 
     this.artikelstammService.find(sortierkriterien).subscribe((res) => {
       this.article = res[0];
+    });
+  }
+
+  // Pop-Up for a feedback after editing a article
+  openSnackBar() {
+    this.snackBar.open('Die Änderungen wurden gespeichert.', 'Schließen', {
+      duration: 3000,
     });
   }
 
@@ -227,8 +242,8 @@ export class ArtikelstammComponent implements OnInit {
     var currentPercentage =
       this.article.materialInformation[lastModifiedIndex].percentage;
 
-    if (currentPercentage == null || isNaN(Number(currentPercentage))) {
-      this.article.materialInformation[lastModifiedIndex].percentage = '0';
+    if (currentPercentage == null || isNaN(currentPercentage)) {
+      this.article.materialInformation[lastModifiedIndex].percentage = 0;
       return;
     }
 
@@ -238,9 +253,8 @@ export class ArtikelstammComponent implements OnInit {
     }
     if (sum > 100) {
       alert('Die Summe der Prozentsätze darf 100% nicht überschreiten.');
-      this.article.materialInformation[lastModifiedIndex].percentage = String(
-        Number(currentPercentage) - sum + 100
-      );
+      this.article.materialInformation[lastModifiedIndex].percentage =
+        currentPercentage - sum + 100;
     }
   }
 
@@ -248,7 +262,7 @@ export class ArtikelstammComponent implements OnInit {
     if (material != '') {
       this.article.materialInformation.push({
         material: material,
-        percentage: '0',
+        percentage: 0,
       });
     }
   }
@@ -329,11 +343,13 @@ export class ArtikelstammComponent implements OnInit {
     return material;
   }
 
+  // Save edited article
   saveArticleData() {
     this.article.currency = 'EUR';
     this.article.packingDimensions.unit = 'mm';
 
     this.artikelstammService.updateOne(this.article).subscribe(() => {
+      this.openSnackBar();
       this.router.navigateByUrl('');
     });
   }
