@@ -18,9 +18,8 @@ export class ArtikelCardComponent implements OnInit {
 
   @Output() deleteButtonWasClicked = new EventEmitter<string>();
 
-  artikelname?: string = 'Herren Training T-Shirt';
-  artikelbeschreibung?: string =
-    'Bleiben Sie während Ihres Trainings mit diesem Herren Training T-Shirt cool und trocken. Das atmungsaktive und feuchtigkeitsableitende Gewebe sorgt für Komfort.';
+  artikelname?: string;
+  artikelbeschreibung?: string;
 
   constructor(private router: Router) {}
 
