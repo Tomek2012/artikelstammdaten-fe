@@ -8,6 +8,8 @@ import { DisplayNames } from 'src/app/models/displayname.model';
   templateUrl: './artikel-card.component.html',
   styleUrls: ['./artikel-card.component.scss'],
 })
+
+// Component to show some informations about a article (on Overview Page)
 export class ArtikelCardComponent implements OnInit {
   @Input() artikelnamen: DisplayNames[] = [];
   @Input() artikelnummer: string = '';
@@ -33,10 +35,12 @@ export class ArtikelCardComponent implements OnInit {
 
   editArticle(): void {}
 
+  // Event for deleting a article
   deleteArticle(): void {
     this.deleteButtonWasClicked.emit(this.artikelnummer);
   }
 
+  // Add default picture when the given picture is not found
   onImgError(event: any) {
     event.target.src =
       'https://cdn.pixabay.com/photo/2012/04/24/12/29/no-symbol-39767_960_720.png';

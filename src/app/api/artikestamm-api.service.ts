@@ -7,12 +7,11 @@ import { SearchCondition } from '../models/searchcondition.model';
 @Injectable({
   providedIn: 'root',
 })
+
+// Api-Class for calling the Backend
 export class ArtikestammApiService {
   constructor(private http: HttpClient) {}
 
-  getAllArtikelstammdaten(): Observable<Artikel[]> {
-    return this.http.get<Artikel[]>('http://localhost:8080/artikelstammdaten');
-  }
 
   find(searchCondition: SearchCondition[]): Observable<Artikel[]> {
     return this.http.post<Artikel[]>(

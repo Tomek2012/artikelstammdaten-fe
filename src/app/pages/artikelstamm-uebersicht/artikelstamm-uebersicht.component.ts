@@ -50,12 +50,6 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     this.getArtikelstaemmeStandard();
   }
 
-  getArtikelstaemme() {
-    this.artikelstammService.getAllArtikelstammdaten().subscribe((res) => {
-      this.artikelstaemme = res;
-    });
-  }
-
   getArtikelstaemmeStandard() {
     this.artikelstammService.find([]).subscribe((res) => {
       this.artikelstaemme = res;
@@ -64,7 +58,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
 
   loescheArtikelstamm(artikelnummer: string) {
     this.artikelstammService.deleteById(artikelnummer).subscribe(() => {
-      this.getArtikelstaemme();
+      this.getArtikelstaemmeStandard();
     });
   }
 
