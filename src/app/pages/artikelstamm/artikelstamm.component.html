@@ -6,7 +6,7 @@
       <table name="articleIdentification">
         <thead>
           <tr>
-            <th class="columnHalfWidth">Artikel-ID</th>
+            <th class="columnHalfWidth">Artikelnummer</th>
             <th class="columnHalfWidth">European Article Number (EAN)</th>
           </tr>
         </thead>
@@ -536,6 +536,9 @@
     </div>
   </form>
   <button class="addButton" type="button" (click)="saveArticleData()">
-    Artikelstammdaten speichern
+    Änderungen speichern
+  </button>
+  <button id="cancelButton" class="deleteButton" type="button" (click)="cancel()">
+    Änderungen verwerfen
   </button>
 </div>

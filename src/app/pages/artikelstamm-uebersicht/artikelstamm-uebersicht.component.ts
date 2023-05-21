@@ -19,6 +19,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     artikelnummer: new FormControl(''),
     artikelname: new FormControl(''),
     gewinn: new FormControl(''),
+    options: new FormControl('1'),
   });
 
   artikelstaemme: Artikel[] = [];
@@ -45,6 +46,8 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     { value: 'costPrice', viewValue: 'Selbstkostenpreis' },
     { value: 'msrp', viewValue: 'UVP' },
   ];
+
+  sortierung?: string;
 
   ngOnInit(): void {
     this.getArtikelstaemmeStandard();
@@ -107,17 +110,24 @@ export class ArtikelstammUebersichtComponent implements OnInit {
       };
       sortierkriterien.push(sortkriterium);
     }
-    if (
-      this.filterForm.controls.sort.value != 'standard' &&
-      this.filterForm.controls.sort.value
-    ) {
-      let sortkriterium: SearchCondition;
-      sortkriterium = {
-        field: this.filterForm.controls.sort.value,
-        operator: 'sort',
-        value: 'ascending',
-      };
-      sortierkriterien.push(sortkriterium);
+    if (this.filterForm.controls.sort.value) {
+      if (this.filterForm.controls.options.value === '1') {
+        let sortkriterium: SearchCondition;
+        sortkriterium = {
+          field: this.filterForm.controls.sort.value,
+          operator: 'sort',
+          value: 'ascending',
+        };
+        sortierkriterien.push(sortkriterium);
+      } else {
+        let sortkriterium: SearchCondition;
+        sortkriterium = {
+          field: this.filterForm.controls.sort.value,
+          operator: 'sort',
+          value: 'descending',
+        };
+        sortierkriterien.push(sortkriterium);
+      }
     }
 
     this.artikelstammService.find(sortierkriterien).subscribe((res) => {

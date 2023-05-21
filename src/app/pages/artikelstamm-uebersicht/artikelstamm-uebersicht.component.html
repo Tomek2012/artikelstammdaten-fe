@@ -43,6 +43,13 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-radio-group
+          aria-label="Select an option"
+          formControlName="options"
+        >
+          <mat-radio-button value="1">Aufsteigend</mat-radio-button>
+          <mat-radio-button value="2">Absteigend</mat-radio-button>
+        </mat-radio-group>
         <div class="row">
           <button (click)="getArtikelstammFilter()" mat-raised-button>
             Bestätigen

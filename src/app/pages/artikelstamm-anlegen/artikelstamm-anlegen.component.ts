@@ -47,7 +47,7 @@ export class ArtikelstammAnlegenComponent {
   newSizeForCountry = '';
   newMaterial = '';
 
-  allLanguages = ['DE', 'EN', 'FR', 'IT', 'ES']; // Liste aller verfügbaren Sprachen
+  allLanguages = ['DE', 'EN', 'FR', 'IT', 'ES'];
   allCountriesForSizes = ['DE', 'FR', 'UK', 'IT', 'ES', 'US'];
   allCountries = ['CN', 'DE', 'FR', 'UK', 'IN', 'IT', 'PT', 'ES', 'US'];
 
@@ -58,16 +58,19 @@ export class ArtikelstammAnlegenComponent {
     });
   }
 
+  // add empty displayName for provided language
   addDisplayName(language: string) {
     if (language != '') {
       this.article.displayNames.push({ language: language, text: '' });
     }
   }
 
+  // delete provided displyName
   removeDisplayName(index: number) {
     this.article.displayNames.splice(index, 1);
   }
 
+  // get a list of all languages for which no displayName is defined
   getAvailableLanguagesForDisplayName(): string[] {
     const usedLanguages = this.article.displayNames.map(
       (displayName) => displayName.language
@@ -79,6 +82,7 @@ export class ArtikelstammAnlegenComponent {
     return availableLanguages;
   }
 
+  // convert language code to German name of the language
   getLanguage(languageCode: string): string {
     var language = languageCode;
     switch (languageCode) {
@@ -101,6 +105,7 @@ export class ArtikelstammAnlegenComponent {
     return language;
   }
 
+  // convert country code to German name of the country
   getCountry(countryCode: string): string {
     var country = countryCode;
     switch (countryCode) {
@@ -138,16 +143,19 @@ export class ArtikelstammAnlegenComponent {
     return country;
   }
 
+  // add empty size for provided country
   addSize(country: string) {
     if (country != '') {
       this.article.sizes.push({ country: country, size: '' });
     }
   }
 
+  // delete provided size
   removeSize(index: number) {
     this.article.sizes.splice(index, 1);
   }
 
+  // get a list of all countries for which no size is defined
   getAvailableCountriesForSizes(): string[] {
     const usedCountries = this.article.sizes.map((size) => size.country);
     const availableCountries = this.allCountriesForSizes.filter(
@@ -157,16 +165,19 @@ export class ArtikelstammAnlegenComponent {
     return availableCountries;
   }
 
+  // add empty description for provided language
   addDescription(language: string) {
     if (language != '') {
       this.article.descriptions.push({ language: language, text: '' });
     }
   }
 
+  // delete provided description
   removeDescription(index: number) {
     this.article.descriptions.splice(index, 1);
   }
 
+  // get a list of all languages for which no description is defined
   getAvailableLanguagesForDescription(): string[] {
     const usedLanguages = this.article.descriptions.map(
       (description) => description.language
@@ -178,6 +189,7 @@ export class ArtikelstammAnlegenComponent {
     return availableLanguages;
   }
 
+  // check that the sum of all percentages is max 100
   validateMaterialPercentages(lastModifiedIndex: number) {
     var currentPercentage =
       this.article.materialInformation[lastModifiedIndex].percentage;
@@ -198,6 +210,7 @@ export class ArtikelstammAnlegenComponent {
     }
   }
 
+  // add material with percentage = 0
   addMaterial(material: string) {
     if (material) {
       this.article.materialInformation.push({
@@ -207,10 +220,12 @@ export class ArtikelstammAnlegenComponent {
     }
   }
 
+  // delete provided material
   removeMaterial(index: number) {
     this.article.materialInformation.splice(index, 1);
   }
 
+  // get a list of all materials for which no percentage is defined
   getAvailableMaterial(): string[] {
     const usedMaterials = this.article.materialInformation.map(
       (material) => material.material
@@ -237,6 +252,8 @@ export class ArtikelstammAnlegenComponent {
     'polyester',
     'wool',
   ];
+
+  // convert material name to German
   getMaterial(englishMaterial: string): string {
     var material = englishMaterial;
     switch (englishMaterial) {
@@ -283,7 +300,7 @@ export class ArtikelstammAnlegenComponent {
     return material;
   }
 
-  // Save new article
+  // save new article in database
   saveArticleData() {
     this.article.currency = 'EUR';
     this.article.packingDimensions.unit = 'mm';
@@ -293,5 +310,10 @@ export class ArtikelstammAnlegenComponent {
         this.router.navigateByUrl('');
       });
     }
+  }
+
+  // cancel the creation of a new article and return to the article list
+  cancel(){
+    this.router.navigateByUrl('');
   }
 }

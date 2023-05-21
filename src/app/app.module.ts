@@ -22,6 +22,7 @@ import { ArtikelstammAnlegenComponent } from './pages/artikelstamm-anlegen/artik
 import { ArtikelstammUebersichtComponent } from './pages/artikelstamm-uebersicht/artikelstamm-uebersicht.component';
 import { ArtikelstammComponent } from './pages/artikelstamm/artikelstamm.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatExpansionModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

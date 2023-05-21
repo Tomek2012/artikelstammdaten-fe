@@ -25,12 +25,14 @@ export class ArtikelCardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    var artikelname = this.artikelnamen.find((obj) => obj.language === 'DE');
-    var artikelbeschreibung = this.artikelbeschreibungen.find(
-      (obj) => obj.language === 'DE'
-    );
-    this.artikelname = artikelname?.text;
-    this.artikelbeschreibung = artikelbeschreibung?.text;
+    if (this.artikelnamen && this.artikelbeschreibungen) {
+      var artikelname = this.artikelnamen.find((obj) => obj.language === 'DE');
+      var artikelbeschreibung = this.artikelbeschreibungen.find(
+        (obj) => obj.language === 'DE'
+      );
+      this.artikelname = artikelname?.text;
+      this.artikelbeschreibung = artikelbeschreibung?.text;
+    }
   }
 
   editArticle(): void {}

@@ -81,16 +81,17 @@ table tr:hover {
   text-align: center;
 }
 
-table td button {
+#cancelButton {
+  float:right;
+}
+
+.deleteButton {
+  background-color: #af5b4c;
   padding: 5px 10px;
   border: none;
   color: white;
   cursor: pointer;
   border-radius: 4px;
-}
-
-.deleteButton {
-  background-color: #af5b4c;
 }
 
 .deleteButton:hover {
@@ -99,6 +100,11 @@ table td button {
 
 .addButton{
   background-color: #4CAF50;
+  padding: 5px 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .addButton:hover{
