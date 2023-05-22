@@ -147,5 +147,6 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     this.filterForm.controls.gewinn.reset();
     this.filterForm.controls.options.setValue('1');
     this.filterForm.controls.sort.setValue('articleId');
+    this.getArtikelstaemmeStandard();
   }
 }
