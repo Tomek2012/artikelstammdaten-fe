@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ArtikestammApiService } from 'src/app/api/artikestamm-api.service';
 import { Artikel } from 'src/app/models/artikel.model';
 import { SearchCondition } from 'src/app/models/searchcondition.model';
@@ -11,7 +12,10 @@ import { Sortierung } from 'src/app/models/sortierung.model';
   styleUrls: ['./artikelstamm-uebersicht.component.scss'],
 })
 export class ArtikelstammUebersichtComponent implements OnInit {
-  constructor(private artikelstammService: ArtikestammApiService) {}
+  constructor(
+    private artikelstammService: ArtikestammApiService,
+    private router: Router
+  ) {}
 
   filterForm = new FormGroup({
     sort: new FormControl('articleId'),
@@ -25,6 +29,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
   artikelstaemme: Artikel[] = [];
 
   colorValues: Sortierung[] = [
+    { value: 'keineAuswahl', viewValue: 'Keine Auswahl' },
     { value: 'beige', viewValue: 'Beige' },
     { value: 'blue', viewValue: 'Blau' },
     { value: 'yellow', viewValue: 'Gelb' },
@@ -40,7 +45,7 @@ export class ArtikelstammUebersichtComponent implements OnInit {
   ];
 
   sortValues: Sortierung[] = [
-    { value: 'articleId', viewValue: 'Artikel ID' },
+    { value: 'articleId', viewValue: 'Artikelnummer' },
     { value: 'ean', viewValue: 'EAN' },
     { value: 'gender', viewValue: 'Geschlecht' },
     { value: 'costPrice', viewValue: 'Selbstkostenpreis' },
@@ -133,5 +138,14 @@ export class ArtikelstammUebersichtComponent implements OnInit {
     this.artikelstammService.find(sortierkriterien).subscribe((res) => {
       this.artikelstaemme = res;
     });
+  }
+
+  resetFilter() {
+    this.filterForm.controls.artikelname.reset();
+    this.filterForm.controls.artikelnummer.reset();
+    this.filterForm.controls.filterFarbe.setValue('keineAuswahl');
+    this.filterForm.controls.gewinn.reset();
+    this.filterForm.controls.options.setValue('1');
+    this.filterForm.controls.sort.setValue('articleId');
   }
 }

@@ -13,11 +13,11 @@
           <input matInput formControlName="artikelnummer" />
         </mat-form-field>
         <mat-form-field class="filterbutton">
-          <mat-label>Artikelname</mat-label>
+          <mat-label>Artikelbezeichnung</mat-label>
           <input matInput formControlName="artikelname" />
         </mat-form-field>
         <mat-form-field class="filterbutton">
-          <mat-label>Gewinn größer als</mat-label>
+          <mat-label>Gewinn (Euro) größer als</mat-label>
           <input matInput type="number" formControlName="gewinn" />
         </mat-form-field>
         <mat-form-field>
@@ -53,6 +53,9 @@
         <div class="row">
           <button (click)="getArtikelstammFilter()" mat-raised-button>
             Bestätigen
+          </button>
+          <button class="resetButton" (click)="resetFilter()" mat-raised-button>
+            Reset
           </button>
         </div>
       </mat-expansion-panel>
